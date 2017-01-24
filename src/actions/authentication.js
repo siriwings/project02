@@ -7,6 +7,9 @@ import {
     FB_AUTH_LOGIN,
     FB_AUTH_LOGIN_SUCCESS,
     FB_AUTH_LOGIN_FAILURE,
+    GL_AUTH_LOGIN,
+    GL_AUTH_LOGIN_SUCCESS,
+    GL_AUTH_LOGIN_FAILURE,
     AUTH_REGISTER,
     AUTH_REGISTER_SUCCESS,
     AUTH_REGISTER_FAILURE,
@@ -16,6 +19,7 @@ import {
     AUTH_LOGOUT
 
 } from './ActionTypes';
+
 axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 /*============================================================================
@@ -58,6 +62,46 @@ export function fbloginSuccess(username) {
 export function fbloginFailure() {
     return {
         type: FB_AUTH_LOGIN_FAILURE
+    };
+}
+
+/* GOOGLE LOGIN */
+export function glloginRequest() {
+    return (dispatch) => {
+        // Inform Login API is starting
+        dispatch(gllogin());
+
+        // API REQUEST
+        return axios.get('/auth/google')
+            .then((response) => {
+                // SUCCEED
+                dispatch(glloginSuccess(response.data.info.name));
+                console.log("GL login SUCCEED");
+            }).catch((error) => {
+                // FAILED
+                dispatch(glloginFailure());
+                console.log("GL login Error");
+            });
+    };
+}
+
+export function gllogin() {
+    return {
+        type: GL_AUTH_LOGIN
+    };
+}
+
+export function glloginSuccess(username) {
+    return {
+        type: GL_AUTH_LOGIN_SUCCESS
+        , username
+    };
+}
+
+
+export function glloginFailure() {
+    return {
+        type: GL_AUTH_LOGIN_FAILURE
     };
 }
 

@@ -12,7 +12,8 @@ const LoginForm = ({
     onChange,
     errors,
     user,
-    responseFacebook
+    responseFacebook,
+    responseGoogle
 }) => (
     <Card className="container">
         <form action="/" onSubmit={onSubmit}>
@@ -47,6 +48,7 @@ const LoginForm = ({
 
         <div>
             <FlatButton label="FACEBOOK" secondary={true} onClick={responseFacebook} />
+            <FlatButton label="GOOGLE" secondary={true} onClick={responseGoogle} />
         </div>
     </Card>
 );

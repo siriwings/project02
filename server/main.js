@@ -19,7 +19,7 @@ import passport from 'passport';
 import localSignupStrategy from './passport/local-signup';
 import localLoginStrategy from './passport/local-login';
 import facebookLoginStrategy from './passport/facebook';
-
+import googleLoginStrategy from './passport/google';
 
 //api로 들어오는 모든 요청에 auth-check적용
 //import authCheckMiddleware from './middleware/auth-check';
@@ -63,6 +63,13 @@ app.use(cookieSession({
     }
 }));
 
+app.all('/*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
+    next();
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -83,6 +90,7 @@ passport.deserializeUser((user, done) => {
 passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
 passport.use('facebook',facebookLoginStrategy);
+passport.use('google',googleLoginStrategy);
 
 /* mongodb connection */
 mongoose.connect(config.mongodbUri);
@@ -92,6 +100,7 @@ db.once('open', () => {
     console.log('Connected to mongodb server');
 });
 
+/*
 app.all('*',function(req,res,next){
 
     if (!req.get('Origin')){
@@ -105,7 +114,7 @@ app.all('*',function(req,res,next){
     }
     next();
 });
-
+*/
 
 app.use('/', express.static(path.join(__dirname, './../public')));
 

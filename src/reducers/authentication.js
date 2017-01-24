@@ -81,6 +81,31 @@ export default function authentication(state, action) {
                 }
             });
 
+        /* GL_LOGIN */
+        case types.GL_AUTH_LOGIN:
+            return update(state, {
+                login: {
+                    status: {$set: 'WAITING'}
+                }
+            });
+        case types.GL_AUTH_LOGIN_SUCCESS:
+            return update(state, {
+                login: {
+                    status: {$set: 'SUCCESS'}
+                },
+                status: {
+                    isLoggedIn: { $set: true }
+                    , currentUser: { $set: action.username }
+                }
+
+            });
+        case types.GL_AUTH_LOGIN_FAILURE:
+            return update(state, {
+                login: {
+                    status: {$set: 'FAILURE'}
+                }
+            });
+
             /*REGISTER*/
         case types.AUTH_REGISTER:
             return update(state, {

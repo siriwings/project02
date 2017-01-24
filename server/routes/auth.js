@@ -116,7 +116,7 @@ router.post('/signup', (req, res, next) => {
 });
 
 /*
-다하고 오류 처리할 것 : 성공시 반환 값은 여기서 주면 되지만, 오류처리는 local-login에서 해줘야할 듯...
+ 다하고 오류 처리할 것 : 성공시 반환 값은 여기서 주면 되지만, 오류처리는 local-login에서 해줘야할 듯...
  */
 router.post('/login', passport.authenticate('local-login')
     , (req, res) => {
@@ -124,7 +124,7 @@ router.post('/login', passport.authenticate('local-login')
         //console.log(req.session);
         res.json({
             success: true
-           , info: req.session.passport.user
+            , info: req.session.passport.user
         });
     });
 
@@ -136,13 +136,13 @@ router.get('/getinfo', (req, res) => {
     //console.log(req.session);
     //console.log(req.session.passport.user);
 
-    if(typeof req.session.passport.user.name === "undefined") {
+    if (typeof req.session.passport.user.name === "undefined") {
         return res.status(401).json({
             error: 1
         });
     }
 
-    res.json({ info: req.session.passport.user });
+    res.json({info: req.session.passport.user});
 });
 
 /*
@@ -150,16 +150,16 @@ router.get('/getinfo', (req, res) => {
  */
 router.get('/logout', (req, res) => {
     //req.session.destroy(err => { if(err) throw err; });
-    req.session=null;
-    return res.json({ success: true });
+    req.session = null;
+    return res.json({success: true});
 });
 
 
 /*facebook Login*/
 router.get('/facebook', passport.authenticate('facebook')
-    ,(req,res)=>{
-    console.log("FBlogin 파트임...111");
-});
+    , (req, res) => {
+        console.log("FBlogin 파트임...111");
+    });
 
 router.get('/facebook/callback', passport.authenticate('facebook')
     , (req, res) => {
@@ -171,5 +171,17 @@ router.get('/facebook/callback', passport.authenticate('facebook')
         });
     });
 
+/*google Login*/
+router.get('/google',passport.authenticate('google', { scope: ['profile'] }));
+
+router.get('/google/callback', passport.authenticate('google')
+    , (req, res) => {
+        console.log("google 파트임...222");
+        console.log(req.session);
+        res.json({
+            success: true
+            , info: req.session.passport.user
+        });
+    });
 
 export default router;

@@ -1,9 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
-import {loginRequest,fbloginRequest} from 'actions/authentication';
+import {loginRequest,fbloginRequest,glloginRequest} from 'actions/authentication';
 import {LoginForm} from 'components';
-import { FacebookLogin } from 'react-facebook-login-component';
 
 class Login extends Component {
 
@@ -25,6 +24,7 @@ class Login extends Component {
         this.processForm = this.processForm.bind(this);
         this.changeUser = this.changeUser.bind(this);
         this.facebookLogin=this.facebookLogin.bind(this);
+        this.googleLogin=this.googleLogin.bind(this);
     }
 
     /**
@@ -59,7 +59,39 @@ class Login extends Component {
     }
 
     facebookLogin(){
-        return this.props.fbloginRequest();
+        return this.props.fbloginRequest().then(
+            () => {
+                if (this.props.status === "SUCCESS") {
+
+                    Materialize.toast('Welcome,' + this.props.username, 2000);
+
+                    browserHistory.push('/');
+
+                    return true;
+                } else {
+
+                    return false;
+                }
+            }
+        );
+    }
+
+    googleLogin(){
+        return this.props.glloginRequest().then(
+            () => {
+                if (this.props.status === "SUCCESS") {
+
+                    Materialize.toast('Welcome,' + this.props.username, 2000);
+
+                    browserHistory.push('/');
+
+                    return true;
+                } else {
+
+                    return false;
+                }
+            }
+        );
     }
 
     /**
@@ -89,6 +121,7 @@ class Login extends Component {
                 errors={this.state.errors}
                 user={this.state.user}
                 responseFacebook={this.facebookLogin}
+                responseGoogle={this.googleLogin}
             />
 
         );
@@ -110,6 +143,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         fbloginRequest: () => {
             return dispatch(fbloginRequest());
+        },
+        glloginRequest: () => {
+            return dispatch(glloginRequest());
         }
     };
 };

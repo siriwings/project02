@@ -15,6 +15,7 @@ const UserSchema = new Schema({
      name: String,
     provider:{type:String, 'defalut':''},
     facebook:{},
+    google:{},
     authToken:{type:String, 'defalut':''}
 });
 

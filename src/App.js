@@ -23,7 +23,7 @@ class App extends React.Component {
         }
 
         // get loginData from cookie
-        let loginData = getCookie('jinsil');
+        let loginData = getCookie('session');
 
         // if loginData is undefined, do nothing
         if (typeof loginData === "undefined") return;
