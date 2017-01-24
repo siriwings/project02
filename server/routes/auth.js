@@ -172,7 +172,7 @@ router.get('/facebook/callback', passport.authenticate('facebook')
     });
 
 /*google Login*/
-router.get('/google',passport.authenticate('google', { scope: ['profile'] }));
+router.get('/google', passport.authenticate('google', { scope: ['profile','email'] }));
 
 router.get('/google/callback', passport.authenticate('google')
     , (req, res) => {

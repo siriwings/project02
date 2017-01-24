@@ -72,7 +72,7 @@ export function glloginRequest() {
         dispatch(gllogin());
 
         // API REQUEST
-        return axios.get('/auth/google')
+        return axios.get('http://local.test.com:4000/auth/google')
             .then((response) => {
                 // SUCCEED
                 dispatch(glloginSuccess(response.data.info.name));

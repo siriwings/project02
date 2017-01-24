@@ -4,14 +4,10 @@ import jwt from 'jsonwebtoken';
 import config from './../config';
 
 export default new PassportFacebookStrategy({
-    //clientID: config.clientID,
-    //callbackURL: config.callbackURL,
-
-    clientID: '1821274114796832',
-    clientSecret: '7dd265a56e3b91caaffbabfb4fa75c83',
-    callbackURL: '/auth/facebook/callback',
-    profileFields: ['id', 'email', 'name', 'displayName'],
-
+    clientID: config.facebook.clientID,
+    clientSecret: config.facebook.clientSecret,
+    callbackURL: config.facebook.callbackURL,
+    profileFields: ['id', 'email', 'name', 'displayName']
 }, (accessToken, refreshToken, profile, done) => {
     console.log("passport의 facebook 호출됨");
     console.dir(profile);
@@ -66,4 +62,3 @@ export default new PassportFacebookStrategy({
         }
     });
 });
-

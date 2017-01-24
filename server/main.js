@@ -34,10 +34,10 @@ const port = 3000;
 const devPort = 4000;
 
 app.use((req,res,next)=>{
-    res.setHeader('Access-Control-Allow-Origin','*');
-    res.setHeader("Access-Control-Max-Age", "3600");
-    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    res.header('Access-Control-Allow-Origin','*');
+    res.header("Access-Control-Max-Age", "3600");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     next();
 });
 
@@ -49,12 +49,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(cookieParser());
 /*
-app.use(session({
-    secret: 'enter secret key'
-    , resave: false
-    , saveUninitialized: false
-}));
-*/
+ app.use(session({
+ secret: 'enter secret key'
+ , resave: false
+ , saveUninitialized: false
+ }));
+ */
 app.use(cookieSession({
     keys: ['node_siri'],
     httpOnly:false,
@@ -62,14 +62,14 @@ app.use(cookieSession({
         maxAge: 1000 * 60 * 60 // 유효기간 1시간
     }
 }));
-
-app.all('/*', function(req, res, next) {
+/*
+app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
     res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
     next();
 });
-
+*/
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -101,20 +101,19 @@ db.once('open', () => {
 });
 
 /*
-app.all('*',function(req,res,next){
-
-    if (!req.get('Origin')){
-        return next();
-    }
-    res.set('Access-Control-Allow-Origin','*');
-    res.set('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTIONS');
-    res.set('Access-Control-Allow-Headers','X-Requested-With,content-type, Authorization');
-    if ('OPTIONS' == req.method){
-        return res.send(200);
-    }
-    next();
-});
-*/
+ app.all('*',function(req,res,next){
+ if (!req.get('Origin')){
+ return next();
+ }
+ res.set('Access-Control-Allow-Origin','*');
+ res.set('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTIONS');
+ res.set('Access-Control-Allow-Headers','X-Requested-With,content-type, Authorization');
+ if ('OPTIONS' == req.method){
+ return res.send(200);
+ }
+ next();
+ });
+ */
 
 app.use('/', express.static(path.join(__dirname, './../public')));
 

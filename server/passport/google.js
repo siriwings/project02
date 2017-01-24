@@ -4,10 +4,9 @@ import jwt from 'jsonwebtoken';
 import config from './../config';
 
 export default new GoogleStrategy({
-    clientID: '852161790312-qkaae5gb58291s15hfmlvnm7vhboodao.apps.googleusercontent.com',
-    clientSecret: 'i9nW8vMRAW2smZ_Swwh9QwFf',
-    callbackURL: '/auth/google/callback'
-  //  profileFields: ['id', 'email', 'name', 'displayName'],
+    clientID: config.google.clientID,
+    clientSecret: config.google.clientSecret,
+    callbackURL: config.google.callbackURL
 
 }, (accessToken, refreshToken, profile, done) => {
     console.log("google 호출됨");
