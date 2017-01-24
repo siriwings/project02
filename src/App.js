@@ -35,6 +35,8 @@ class App extends React.Component {
         // if not logged in, do nothing
         if (!loginData.passport.user.isLoggedIn) return;
 
+        Materialize.toast('Welcome,' + loginData.passport.user.name, 2000);
+
         // page refreshed & has a session in cookie,
         // check whether this cookie is valid or not
         this.props.getStatusRequest().then(

@@ -19,7 +19,8 @@ export default new PassportLocalStrategy({
         name: req.body.name.trim()
     };
 
-    return User.findOne({email: userData.email}, (err, user) => {
+    // find a user who doesn't have provider by email address
+    return User.findOne({$and:[{email: userData.email},{provider:{$nin:["facebook","google"]}}]}, (err, user) => {
         if (user) {
             const error = new Error('This email is already taken.');
             error.name = 'IncorrectCredentialsError';
@@ -34,5 +35,4 @@ export default new PassportLocalStrategy({
             });
         }
     });
-
 });

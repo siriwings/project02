@@ -56,56 +56,6 @@ export default function authentication(state, action) {
                 }
             });
 
-        /* FB_LOGIN */
-        case types.FB_AUTH_LOGIN:
-            return update(state, {
-                login: {
-                    status: {$set: 'WAITING'}
-                }
-            });
-        case types.FB_AUTH_LOGIN_SUCCESS:
-            return update(state, {
-                login: {
-                    status: {$set: 'SUCCESS'}
-                },
-                status: {
-                    isLoggedIn: { $set: true }
-                    , currentUser: { $set: action.username }
-                }
-
-            });
-        case types.FB_AUTH_LOGIN_FAILURE:
-            return update(state, {
-                login: {
-                    status: {$set: 'FAILURE'}
-                }
-            });
-
-        /* GL_LOGIN */
-        case types.GL_AUTH_LOGIN:
-            return update(state, {
-                login: {
-                    status: {$set: 'WAITING'}
-                }
-            });
-        case types.GL_AUTH_LOGIN_SUCCESS:
-            return update(state, {
-                login: {
-                    status: {$set: 'SUCCESS'}
-                },
-                status: {
-                    isLoggedIn: { $set: true }
-                    , currentUser: { $set: action.username }
-                }
-
-            });
-        case types.GL_AUTH_LOGIN_FAILURE:
-            return update(state, {
-                login: {
-                    status: {$set: 'FAILURE'}
-                }
-            });
-
             /*REGISTER*/
         case types.AUTH_REGISTER:
             return update(state, {
@@ -160,6 +110,57 @@ export default function authentication(state, action) {
                     currentUser: {$set: ''}
                 }
             });
+/*
+        // FB_LOGIN
+        case types.FB_AUTH_LOGIN:
+            return update(state, {
+                login: {
+                    status: {$set: 'WAITING'}
+                }
+            });
+        case types.FB_AUTH_LOGIN_SUCCESS:
+            return update(state, {
+                login: {
+                    status: {$set: 'SUCCESS'}
+                },
+                status: {
+                    isLoggedIn: { $set: true }
+                    , currentUser: { $set: action.username }
+                }
+
+            });
+        case types.FB_AUTH_LOGIN_FAILURE:
+            return update(state, {
+                login: {
+                    status: {$set: 'FAILURE'}
+                }
+            });
+
+        // GL_LOGIN
+        case types.GL_AUTH_LOGIN:
+            return update(state, {
+                login: {
+                    status: {$set: 'WAITING'}
+                }
+            });
+        case types.GL_AUTH_LOGIN_SUCCESS:
+            return update(state, {
+                login: {
+                    status: {$set: 'SUCCESS'}
+                },
+                status: {
+                    isLoggedIn: { $set: true }
+                    , currentUser: { $set: action.username }
+                }
+
+            });
+        case types.GL_AUTH_LOGIN_FAILURE:
+            return update(state, {
+                login: {
+                    status: {$set: 'FAILURE'}
+                }
+            });
+*/
 
         default:
             return state;

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
-import {loginRequest,fbloginRequest,glloginRequest} from 'actions/authentication';
+import {loginRequest} from 'actions/authentication';
 import {LoginForm} from 'components';
 
 class Login extends Component {
@@ -44,12 +44,11 @@ class Login extends Component {
         return this.props.loginRequest(email, password).then(
             () => {
                 if (this.props.status === "SUCCESS") {
-
                     Materialize.toast('Welcome,' + this.props.username, 2000);
-
                     browserHistory.push('/');
 
                     return true;
+
                 } else {
 
                     return false;
@@ -58,41 +57,9 @@ class Login extends Component {
         );
     }
 
-    facebookLogin(){
-        return this.props.fbloginRequest().then(
-            () => {
-                if (this.props.status === "SUCCESS") {
+    facebookLogin(){location.href='/auth/facebook';};
 
-                    Materialize.toast('Welcome,' + this.props.username, 2000);
-
-                    browserHistory.push('/');
-
-                    return true;
-                } else {
-
-                    return false;
-                }
-            }
-        );
-    }
-
-    googleLogin(){
-        return this.props.glloginRequest().then(
-            () => {
-                if (this.props.status === "SUCCESS") {
-
-                    Materialize.toast('Welcome,' + this.props.username, 2000);
-
-                    browserHistory.push('/');
-
-                    return true;
-                } else {
-
-                    return false;
-                }
-            }
-        );
-    }
+    googleLogin(){location.href='/auth/google';}
 
     /**
      * Change the user object.
@@ -140,12 +107,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         loginRequest: (email, password) => {
             return dispatch(loginRequest(email, password));
-        },
-        fbloginRequest: () => {
-            return dispatch(fbloginRequest());
-        },
-        glloginRequest: () => {
-            return dispatch(glloginRequest());
         }
     };
 };

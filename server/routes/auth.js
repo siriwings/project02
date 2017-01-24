@@ -161,7 +161,7 @@ router.get('/facebook', passport.authenticate('facebook')
         console.log("FBlogin 파트임...111");
     });
 
-router.get('/facebook/callback', passport.authenticate('facebook')
+router.get('/facebook/callback', passport.authenticate('facebook', { successRedirect:'/',failureRedirect: '/login' })
     , (req, res) => {
         console.log("FBlogin 파트임...222");
         console.log(req.session);
@@ -174,7 +174,7 @@ router.get('/facebook/callback', passport.authenticate('facebook')
 /*google Login*/
 router.get('/google', passport.authenticate('google', { scope: ['profile','email'] }));
 
-router.get('/google/callback', passport.authenticate('google')
+router.get('/google/callback', passport.authenticate('google',{ successRedirect:'/',failureRedirect: '/login' })
     , (req, res) => {
         console.log("google 파트임...222");
         console.log(req.session);

@@ -4,6 +4,7 @@ import path from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 
+//import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan'; // HTTP REQUEST LOGGER
 import bodyParser from 'body-parser'; // PARSE HTML BODY
@@ -41,6 +42,7 @@ app.use((req,res,next)=>{
     next();
 });
 
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
@@ -70,6 +72,10 @@ app.all('*', function(req, res, next) {
     next();
 });
 */
+
+//app.use(cors);
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 

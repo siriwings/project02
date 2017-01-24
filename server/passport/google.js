@@ -6,20 +6,22 @@ import config from './../config';
 export default new GoogleStrategy({
     clientID: config.google.clientID,
     clientSecret: config.google.clientSecret,
-    callbackURL: config.google.callbackURL
+    callbackURL: config.google.callbackURL,
+    passReqToCallback: true
 
-}, (accessToken, refreshToken, profile, done) => {
+}, (req,accessToken, refreshToken, profile, done) => {
+
     console.log("google 호출됨");
-    console.dir(profile);
+    //console.dir(profile);
 
     const userData = {
+        id: profile.id, //To prevent duplicated data setting
         email: profile.emails[0].value,
-        provider: 'google',
-        google: profile._json,
         name: profile.displayName,
+        provider:"google"
     };
 
-    return User.findOne({email: profile.emails[0].value}, (err, user) => {
+    return User.findOne({id: profile.id}, (err, user) => {
         if (user) {
             const payload = {
                 sub: user._id
@@ -53,7 +55,7 @@ export default new GoogleStrategy({
                     }
                 );
                 const data = {
-                    name: user.name,
+                    name: profile.displayName,
                     isLoggedIn: true,
                     token: token
                 };

@@ -7,19 +7,20 @@ export default new PassportFacebookStrategy({
     clientID: config.facebook.clientID,
     clientSecret: config.facebook.clientSecret,
     callbackURL: config.facebook.callbackURL,
-    profileFields: ['id', 'email', 'name', 'displayName']
+    profileFields: ['id','email', 'displayName']
 }, (accessToken, refreshToken, profile, done) => {
     console.log("passport의 facebook 호출됨");
-    console.dir(profile);
+   // console.dir(profile);
 
     const userData = {
+        id:profile.id,
         email: profile.emails[0].value,
-        provider: 'facebook',
-        facebook: profile._json,
         name: profile.displayName,
+        provider:"facebook"
     };
 
-    return User.findOne({email: profile.emails[0].value}, (err, user) => {
+    return User.findOne({id: profile.id}, (err, user) => {
+
         if (user) {
             const payload = {
                 sub: user._id
@@ -53,7 +54,7 @@ export default new PassportFacebookStrategy({
                     }
                 );
                 const data = {
-                    name: user.name,
+                    name: profile.displayName,
                     isLoggedIn: true,
                     token: token
                 };

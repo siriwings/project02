@@ -14,8 +14,8 @@ export default new PassportLocalStrategy({
         password: password.trim()
     };
 
-    // find a user by email address
-    return User.findOne({email: userData.email}, (err, user) => {
+    // find a user who doesn't have provider by email address
+    return User.findOne({$and:[{email: userData.email},{provider:{$nin:["facebook","google"]}}]}, (err, user) => {
         if (err) {
             return done(err);
         }
